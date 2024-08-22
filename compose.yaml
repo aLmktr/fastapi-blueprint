@@ -1,0 +1,19 @@
+services:
+  db:
+    image: postgres
+    container_name: fastapi_stack_db
+
+    environment:
+      POSTGRES_PASSWORD: hLATHuLblbh0bpCL4waF8N7Fj33fRQeyMz+l+t096oM=
+      POSTGRES_USER: root
+      POSTGRES_DB: postgres
+
+    volumes:
+      - fastapi_stack_db:/var/lib/postgresql/data
+
+    restart: always
+    ports:
+      - "5433:5432"
+
+volumes:
+  fastapi_stack_db:
