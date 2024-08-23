@@ -8,6 +8,9 @@ class Settings(BaseSettings):
         env_file="../.env", env_ignore_empty=True, extra="ignore"
     )
 
+    API_VER_STR: str = "api/v1"
+    ACCESS_TOKEN_EXPI_MIN: int = 15
+
     DB_USER: str
     DB_PASS: str
     DB_HOST: str
