@@ -1,12 +1,14 @@
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status
 
+from api.core.config import settings
 from api.core.database import db_dependency
+from api.core.security import CurrentUser, admin_user
 
 from . import crud
 from .schemas import UserCreate, UserUpdate
 
 router = APIRouter(
-    prefix="/user",
+    prefix=f"{settings.API_VER_STR}/user",
     tags=["user"],
 )
 
@@ -31,7 +33,7 @@ def read_user(db: db_dependency, user_id: int):
     return db_user
 
 
-@router.get("/read-all")
+@router.get("/read-all", dependencies=[Depends(admin_user)])
 def read_all_users(db: db_dependency):
     try:
         db_users = crud.read_all_users(db)
@@ -41,7 +43,7 @@ def read_all_users(db: db_dependency):
     return db_users
 
 
-@router.patch("/update/{user_id}")
+@router.patch("/update/{user_id}", dependencies=[Depends(admin_user)])
 def update_user(db: db_dependency, user_id: int, user_data: UserUpdate):
     try:
         db_user = crud.update_user(db, user_id, user_data)
