@@ -14,7 +14,7 @@ router = APIRouter(
 )
 
 
-@router.post("/access-token")
+@router.post("/login")
 def login_for_access_token(
     db: db_dependency, form_data: Annotated[OAuth2PasswordRequestForm, Depends()]
 ):

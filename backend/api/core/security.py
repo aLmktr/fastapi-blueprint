@@ -14,9 +14,7 @@ from .config import settings
 from .database import db_dependency
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-oauth2_scheme = OAuth2PasswordBearer(
-    tokenUrl=f"{settings.API_VER_STR}/auth/access-token/"
-)
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl=f"{settings.API_VER_STR}/auth/login/")
 oauth2_dependency = Annotated[str, Depends(oauth2_scheme)]
 
 
