@@ -1,11 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException, status
+from typing import List
 
 from api.core.config import settings
 from api.core.database import db_dependency
 from api.core.security import CurrentUser, admin_user
 
 from . import crud
-from .schemas import UserCreate, UserUpdate
+from .schemas import UserCreate, UserUpdate, UserPublic, UserPrivate
 
 router = APIRouter(
     prefix=f"{settings.API_VER_STR}/user",
@@ -13,7 +14,7 @@ router = APIRouter(
 )
 
 
-@router.post("/create")
+@router.post("/create", response_model=UserPublic)
 def create_user(db: db_dependency, user: UserCreate):
     try:
         db_user = crud.create_user(db, user)
@@ -23,7 +24,11 @@ def create_user(db: db_dependency, user: UserCreate):
     return db_user
 
 
-@router.get("/read/{user_id}")
+@router.get(
+    "/read-user/{user_id}",
+    dependencies=[Depends(admin_user)],
+    response_model=UserPrivate,
+)
 def read_user(db: db_dependency, user_id: int):
     try:
         db_user = crud.read_user(db, user_id)
@@ -33,7 +38,14 @@ def read_user(db: db_dependency, user_id: int):
     return db_user
 
 
-@router.get("/read-all", dependencies=[Depends(admin_user)])
+@router.get("/me", response_model=UserPublic)
+def read_current_user(current_user: CurrentUser):
+    return current_user
+
+
+@router.get(
+    "/read-users", dependencies=[Depends(admin_user)], response_model=List[UserPrivate]
+)
 def read_all_users(db: db_dependency):
     try:
         db_users = crud.read_all_users(db)
@@ -43,7 +55,9 @@ def read_all_users(db: db_dependency):
     return db_users
 
 
-@router.patch("/update/{user_id}", dependencies=[Depends(admin_user)])
+@router.patch(
+    "/update/{user_id}", dependencies=[Depends(admin_user)], response_model=UserPrivate
+)
 def update_user(db: db_dependency, user_id: int, user_data: UserUpdate):
     try:
         db_user = crud.update_user(db, user_id, user_data)
@@ -53,7 +67,9 @@ def update_user(db: db_dependency, user_id: int, user_data: UserUpdate):
     return db_user
 
 
-@router.delete("/delete/{user_id}")
+@router.delete(
+    "/delete/{user_id}", dependencies=[Depends(admin_user)], response_model=UserPrivate
+)
 def delete_user(db: db_dependency, user_id: int):
     try:
         db_user = crud.delete_user(db, user_id)
