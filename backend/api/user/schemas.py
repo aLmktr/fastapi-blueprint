@@ -1,4 +1,5 @@
 from typing import Optional
+from datetime import datetime
 
 from pydantic import BaseModel
 
@@ -11,18 +12,17 @@ class UserCreate(BaseModel):
     password: str
 
 
-class UserPblic(BaseModel):
+class UserPublic(BaseModel):
     username: str
     email: str
     role: str
-    created: str
-    last_login: str
+    created: datetime
+    last_login: datetime | None = None
 
 
-class UserPrivate(UserPblic):
+class UserPrivate(UserPublic):
     id: int
-    password: str
-    updated: str
+    updated: datetime | None = None
 
 
 class UserUpdate(BaseModel):
