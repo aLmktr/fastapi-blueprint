@@ -12,6 +12,10 @@ class UserCreate(BaseModel):
     password: str
 
 
+class SuperUserCreate(UserCreate):
+    role: Roles = Roles.ADMIN
+
+
 class UserPublic(BaseModel):
     username: str
     email: str

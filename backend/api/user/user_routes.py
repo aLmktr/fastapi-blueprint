@@ -1,12 +1,13 @@
-from fastapi import APIRouter, Depends, HTTPException, status
 from typing import List
+
+from fastapi import APIRouter, Depends, HTTPException, status
 
 from api.core.config import settings
 from api.core.database import db_dependency
 from api.core.security import CurrentUser, admin_user
 
 from . import crud
-from .schemas import UserCreate, UserUpdate, UserPublic, UserPrivate
+from .schemas import UserCreate, UserPrivate, UserPublic, UserUpdate
 
 router = APIRouter(
     prefix=f"{settings.API_VER_STR}/user",
