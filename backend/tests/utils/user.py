@@ -1,12 +1,10 @@
 import random
 import string
 
-from sqlalchemy.orm import Session
-
-
 from api.user import crud
 from api.user.models import User
 from api.user.schemas import UserCreate
+from sqlalchemy.orm import Session
 
 
 def create_random_string(length: int = 8) -> str:
