@@ -2,8 +2,8 @@ from sqlalchemy.orm import Session
 
 from api.core.security import get_password_hash
 
-from .models import User
-from .schemas import UserCreate, UserUpdate
+from .models import User, Roles
+from .schemas import UserCreate, UserUpdate, SuperUserCreate
 
 
 def create_user(db: Session, user: UserCreate):
@@ -21,6 +21,27 @@ def create_user(db: Session, user: UserCreate):
         username=user.username,
         email=user.email,
         password=get_password_hash(user.password),
+    )
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+    return db_user
+
+
+def create_superuser(db: Session, user: SuperUserCreate):
+    db_username = db.query(User).filter(User.username == user.username).first()
+    if db_username:
+        raise ValueError("Username already exists")
+
+    db_email = db.query(User).filter(User.email == user.email).first()
+    if db_email:
+        raise ValueError("Email already exists")
+
+    db_user = User(
+        username=user.username,
+        email=user.email,
+        password=get_password_hash(user.password),
+        role=Roles.ADMIN,
     )
     db.add(db_user)
     db.commit()
