@@ -26,13 +26,13 @@ def create_user(db: db_dependency, user: UserCreate):
 
 
 @router.get(
-    "/read-user/{user_id}",
+    "/read-user/{username}",
     dependencies=[Depends(admin_user)],
     response_model=UserPrivate,
 )
-def read_user(db: db_dependency, user_id: int):
+def read_user(db: db_dependency, username: str):
     try:
-        db_user = crud.read_user(db, user_id)
+        db_user = crud.read_user(db, username)
     except ValueError as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 

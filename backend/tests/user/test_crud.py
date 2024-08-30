@@ -67,16 +67,16 @@ def test_create_superuser(session: Session) -> None:
 
 def test_read_user(session: Session) -> None:
     user = create_random_user(session)
-    user_id = user.id
-    db_user = crud.read_user(session, user_id)
+    username = user.username
+    db_user = crud.read_user(session, username)
 
     assert db_user == user
 
 
 def test_read_user_not_found(session: Session) -> None:
-    user_id = 99999999
+    username = "not_a_user"
     with pytest.raises(ValueError, match="User not found"):
-        crud.read_user(session, user_id)
+        crud.read_user(session, username)
 
 
 def test_read_all_users(session: Session) -> None:

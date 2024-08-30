@@ -49,8 +49,8 @@ def create_superuser(db: Session, user: SuperUserCreate):
     return db_user
 
 
-def read_user(db: Session, user_id: int):
-    db_user = db.get(User, user_id)
+def read_user(db: Session, username: str):
+    db_user = db.query(User).filter(User.username == username).first()
     if not db_user:
         raise ValueError("User not found")
     return db_user
