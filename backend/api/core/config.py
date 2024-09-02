@@ -1,6 +1,16 @@
-from pydantic_settings import BaseSettings, SettingsConfigDict
+from typing import Annotated, Any
+
+from pydantic import AnyUrl, BeforeValidator, PostgresDsn, computed_field
 from pydantic_core import MultiHostUrl
-from pydantic import computed_field, PostgresDsn
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
+
+def parse_cors(v: Any) -> list[str] | str:
+    if isinstance(v, str) and not v.startswith("["):
+        return [i.strip() for i in v.split(",")]
+    elif isinstance(v, list | str):
+        return v
+    raise ValueError(v)
 
 
 class Settings(BaseSettings):
@@ -9,6 +19,7 @@ class Settings(BaseSettings):
     )
 
     API_VER_STR: str = "/api/v1"
+    CORS_ORIGINS: Annotated[list[AnyUrl] | str, BeforeValidator(parse_cors)] = []
     ACCESS_TOKEN_EXPI_MIN: int = 15
 
     DB_USER: str
