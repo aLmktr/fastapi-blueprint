@@ -1,19 +1,63 @@
 services:
   db:
-    image: postgres
-    container_name: fastapi_stack_db
+    image: postgres:16
+    container_name: fastapi_blueprint_db
+    env_file:
+      - .env
 
     environment:
-      POSTGRES_PASSWORD: hLATHuLblbh0bpCL4waF8N7Fj33fRQeyMz+l+t096oM=
-      POSTGRES_USER: root
-      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_DB: ${DB_NAME}
 
     volumes:
-      - fastapi_stack_db:/var/lib/postgresql/data
+      - fastapi_blueprint_db:/var/lib/postgresql/data
 
     restart: always
     ports:
       - "5433:5432"
 
+  app:
+    build: ./backend
+    command: bash -c "alembic upgrade head && fastapi run main.py"
+
+    container_name: fastapi_blueprint_app
+    env_file:
+      - .env
+
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+
+    depends_on:
+      - db
+
+    volumes:
+      - ./backend:/app
+
+    restart: always
+    ports:
+      - "8000:8000"
+
+  test:
+    build: ./backend
+    command: bash -c "pytest -n 6 --cov=."
+
+    container_name: fastapi_blueprint_test
+    env_file:
+      - .env
+
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+
+    depends_on:
+      - db
+
+    volumes:
+      - ./backend:/app
+
+    restart: "no"
+
 volumes:
-  fastapi_stack_db:
+  fastapi_blueprint_db:
