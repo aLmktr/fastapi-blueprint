@@ -1,9 +1,9 @@
 import pytest
-from sqlalchemy import create_engine, StaticPool
-from sqlalchemy.orm import sessionmaker
+from api.core.database import Base, get_db
 from fastapi.testclient import TestClient
 from main import app
-from api.core.database import Base, get_db
+from sqlalchemy import StaticPool, create_engine
+from sqlalchemy.orm import sessionmaker
 
 engine = create_engine(
     "sqlite://", connect_args={"check_same_thread": False}, poolclass=StaticPool
@@ -27,16 +27,16 @@ def session(db_engine):
         db.close()
 
 
-@pytest.fixture(scope="module")
-def client():
-    app.dependency_overrides[get_db] = override_get_db
-    with TestClient(app) as client:
-        yield client
-
-
 def override_get_db():
     db = TestingSessionLocal()
     try:
         yield db
     finally:
         db.close()
+
+
+@pytest.fixture(scope="module")
+def client():
+    app.dependency_overrides[get_db] = override_get_db
+    with TestClient(app) as client:
+        yield client
