@@ -1,7 +1,5 @@
 <div align="center">
-   <img src="fastapi_blueprint_logo.png" alt="fastapi-blueprint-logo" />
-   <br />
-   <p>Ready-to-use template for building RESTful APIs with FastAPI, following best practices and popular tools.</p>
+   <img src="https://github.com/user-attachments/assets/f4311d59-2dce-4542-b1e7-3973db6b9a5c" alt="fastapi-blueprint-logo" />
 </div>
 
 <br />
