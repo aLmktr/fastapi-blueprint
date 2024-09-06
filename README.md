@@ -75,13 +75,16 @@ The project is organized into a modular structure to promote scalability and mai
    cd fastapi-blueprint 
    ```
 
-3. **Build and run the Docker containers:**
+3. **Update the `.env.test` file by setting the DB_PASS and SECRET_KEY (using hashes is recommended). Then, rename the file to `.env`**
+
+
+4. **Build and run the Docker containers:**
 
    ```bash
    docker-compose up --build
    ```
 
-4. **That's !, now you can find your API docs here [localhost:8000/docs](http://0.0.0.0:8000/docs)**
+5. **That's ! now you can find your API docs here [localhost:8000/docs](http://0.0.0.0:8000/docs)**
 
 <br />
 
@@ -96,21 +99,13 @@ The project is organized into a modular structure to promote scalability and mai
 - **Access the API documentation:**
   Open your browser and navigate to `http://localhost:8000/docs` for the Swagger UI or `http://localhost:8000/redoc` for ReDoc.
 
-## Running Tests
-
-To run the unit tests, use the following command:
-
-```bash
-docker-compose exec web pytest
-```
-
-## Configuration
-
-Configuration settings are managed via environment variables. You can customize the configuration by editing the `.env` file.
+<br />
 
 ## Contributing
 
 If you have suggestions or improvements, please open an issue or submit a pull request. Contributions are welcome!
+
+<br />
 
 ## License
 
