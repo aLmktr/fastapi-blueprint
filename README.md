@@ -11,8 +11,8 @@
 ## Features
 
 - **FastAPI**: A high-performance web framework for building APIs with Python.
-- **SQLAlchemy**: An ORM tool adhering to version 2 conventions for efficient database operations.
-- **Alembic**: Manages database migrations seamlessly.
+- **SQLAlchemy**: An ORM tool. Following SQLAlchemy's version 2 approach for defining models
+- **Alembic**: Manages database migrations.
 - **PostgreSQL**: A robust and scalable database system.
 - **Docker**: Provides containerization for consistent development and deployment environments.
 - **Unit Testing with Pytest**: Ensures code quality and reliability through effective testing.
@@ -23,7 +23,7 @@
 
 ## Project Structure
 
-The project is organized into a modular structure to promote scalability and maintainability. Below is an overview of the directory structure:
+The project is organized into a modular structure to promote scalability and maintainability.
 
 ```bash
 
@@ -66,13 +66,13 @@ The project is organized into a modular structure to promote scalability and mai
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/yourusername/fastapi-stack.git
+   git clone https://github.com/aLmktr/fastapi-blueprint.git
    ```
 
-2. **Navigate to the project directory:**
+2. **Step into the project:**
 
    ```bash
-   cd fastapi-stack
+   cd fastapi-blueprint 
    ```
 
 3. **Build and run the Docker containers:**
@@ -81,10 +81,9 @@ The project is organized into a modular structure to promote scalability and mai
    docker-compose up --build
    ```
 
-4. **Apply database migrations:**
-   ```bash
-   docker-compose exec web alembic upgrade head
-   ```
+4. **That's !, now you can find your API docs here [localhost:8000/docs](http://0.0.0.0:8000/docs)**
+
+<br />
 
 ## Usage
 
