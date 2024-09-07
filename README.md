@@ -88,6 +88,23 @@ The project is organized into a modular structure to promote scalability and mai
 
 <br />
 
+### Note
+- For security reasons, we have not included any method to create a superuser via the API. To create the first superuser, please follow these steps:
+1. Create a normal user using the `create/` API endpoint.
+2. Access the database using Docker by running:
+```bash
+docker exec -it fastapi_blueprint_db psql -U root -d fastapi_blueprint_db
+```
+3. Run the following SQL command to update the user role:
+```sql
+UPDATE users SET role='SUPERUSER' WHERE username='your_username_here';
+```
+4. Exit the database by running `\q`.
+- Once these steps are completed, you are ready to proceed with managing your application.
+
+
+<br />
+
 ## Extending the App
 Say, for example, you want to use this template for a shop and add functionality for managing items. You can do this by following these steps:
 
