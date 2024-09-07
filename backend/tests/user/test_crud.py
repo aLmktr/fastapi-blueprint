@@ -1,7 +1,7 @@
 import pytest
 from api.user import crud
 from api.user.models import Roles, User
-from api.user.schemas import UserCreate, UserUpdate, SuperUserCreate
+from api.user.schemas import UserCreate, UserUpdate
 from sqlalchemy.orm import Session
 
 from tests.utils.user import (
@@ -48,21 +48,6 @@ def test_create_user_existing_email(session: Session) -> None:
 
     with pytest.raises(ValueError, match="Email already exists"):
         crud.create_user(session, user_2)
-
-
-def test_create_superuser(session: Session) -> None:
-    superuser = SuperUserCreate(
-        username=create_random_string(),
-        email=create_random_email(),
-        password=create_random_string(),
-        rolse=Roles.ADMIN,
-    )
-    db_superuser = crud.create_superuser(session, superuser)
-
-    assert db_superuser.username == superuser.username
-    assert db_superuser.email == superuser.email
-    assert db_superuser.role == Roles.ADMIN
-    assert hasattr(db_superuser, "password")
 
 
 def test_read_user(session: Session) -> None:

@@ -30,10 +30,6 @@ class Settings(BaseSettings):
     ALGORITHM: str
     SECRET_KEY: str
 
-    FIRST_SUPERUSER: str | None = None
-    FIRST_SUPERUSER_MAIL: str | None = None
-    FIRST_SUPERUSER_PASSWORD: str | None = None
-
     @computed_field
     @property
     def DB_URI(self) -> PostgresDsn:
