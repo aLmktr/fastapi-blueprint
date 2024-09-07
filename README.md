@@ -84,20 +84,52 @@ The project is organized into a modular structure to promote scalability and mai
    docker-compose up --build
    ```
 
-5. **That's ! now you can find your API docs here [localhost:8000/docs](http://0.0.0.0:8000/docs)**
+5. **That's it! now you can find your API docs here [localhost:8000/docs](http://0.0.0.0:8000/docs)**
 
 <br />
 
-## Usage
+## Extending the App
+Say, for example, you want to use this template for a shop and add functionality for managing items. You can do this by following these steps:
 
-- **Run the application:**
+1. **Create a new folder for the items functionality inside api folder `api/items` organize the folder as follow:**
+```bash
 
-  ```bash
-  docker-compose up
-  ```
+└── 📁 items
+     ├── 📄 __init__.py 
+     ├── 📄 crud.py           
+     ├── 📄 models.py         
+     ├── 📄 schemas.py        
+     └── 📄 item_routes.py  
 
-- **Access the API documentation:**
-  Open your browser and navigate to `http://localhost:8000/docs` for the Swagger UI or `http://localhost:8000/redoc` for ReDoc.
+```
+
+2. **Write your database models:**
+In the `models.py` file within the `items` folder, define your database models for the items functionality.
+
+3. **Add model imports to Alembic for migrations:**
+After writing your models, open the `migrations/env.py` file and add the following line under the user model import to ensure Alembic recognizes your items models:
+```python
+
+"""
+Import all models here to ensure they are included in the migration
+"""
+from api.user import models  # noqa
+from api.items import models # noqa  <-------- this line 
+
+target_metadata = Base.metadata
+
+```
+
+4. **Run the migration:**
+Make sure your container is running, then apply the migrations by running:
+```bash
+alembic revision --autogenerate -m "Add items models"
+alembic upgrade head 
+```
+
+5. **You're ready to go!**
+Now you can start working on your new items functionality or any other feature for your app!
+
 
 <br />
 
