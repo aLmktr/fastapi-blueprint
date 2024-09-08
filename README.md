@@ -97,7 +97,7 @@ docker exec -it fastapi_blueprint_db psql -U root -d fastapi_blueprint_db
 ```
 3. Run the following SQL command to update the user role:
 ```sql
-UPDATE users SET role='SUPERUSER' WHERE username='your_username_here';
+UPDATE users SET role='ADMIN' WHERE username='your_username_here';
 ```
 4. Exit the database by running `\q`.
 - Once these steps are completed, you are ready to proceed with managing your application.
