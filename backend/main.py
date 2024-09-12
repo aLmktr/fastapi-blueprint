@@ -1,6 +1,6 @@
 from api.auth import auth_routes
 from api.core.config import settings
-from api.user import user_routes
+from api.user import user_routes, admin_routes
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -18,3 +18,4 @@ if settings.CORS_ORIGINS:
 
 app.include_router(auth_routes.router)
 app.include_router(user_routes.router)
+app.include_router(admin_routes.router)
