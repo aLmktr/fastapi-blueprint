@@ -45,7 +45,8 @@ The project is organized into a modular structure to promote scalability and mai
 │  ├── 🐳 Dockerfile
 │  ├── 📄 main.py
 │  ├── 📁 migrations
-│  ├── 📦 requirements.txt
+│  ├── 📦 pyproject.toml
+│  ├── 🔒 uv.lock
 │  └── 📁 tests
 │     ├── 📄 conftest.py
 │     ├── 📁 user
@@ -85,6 +86,18 @@ The project is organized into a modular structure to promote scalability and mai
    ```
 
 5. **That's it! now you can find your API docs here [localhost:8000/docs](http://0.0.0.0:8000/docs)**
+
+### Local development (without Docker)
+
+Dependencies are managed with [uv](https://docs.astral.sh/uv/). From the `backend` folder:
+
+```bash
+uv sync                      # install runtime + dev dependencies into .venv
+uv run pytest -n 6 --cov=.   # run the tests
+uv run fastapi dev main.py   # run the app (needs the database running)
+```
+
+Add a dependency with `uv add <package>` (or `uv add --dev <package>` for dev tools); this updates `pyproject.toml` and `uv.lock`, which should both be committed.
 
 <br />
 
