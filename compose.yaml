@@ -40,7 +40,10 @@ services:
       - "8000:8000"
 
   test:
-    build: ./backend
+    build:
+      context: ./backend
+      args:
+        DEV: "true"
     command: bash -c "pytest -n 6 --cov=."
 
     container_name: fastapi_blueprint_test
