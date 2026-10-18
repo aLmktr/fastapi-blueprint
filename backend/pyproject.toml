@@ -1,0 +1,21 @@
+[project]
+name = "fastapi-blueprint"
+version = "0.1.0"
+description = "FastAPI template with JWT auth, PostgreSQL, and Docker Compose for rapid API development."
+requires-python = ">=3.11"
+dependencies = [
+    "alembic>=1.13.2",
+    "bcrypt>=4.2.0",
+    "fastapi[standard]>=0.112.1",
+    "psycopg2-binary>=2.9.9",
+    "pydantic-settings>=2.4.0",
+    "pyjwt>=2.9.0",
+    "sqlalchemy>=2.0.32",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.2",
+    "pytest-cov>=5.0.0",
+    "pytest-xdist>=3.6.1",
+]
